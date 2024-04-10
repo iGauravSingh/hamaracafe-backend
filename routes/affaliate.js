@@ -39,7 +39,8 @@ router.post(
       }
   
       const { email, password, name, mobile, website,youtube,intagram } = req.body;
-      //console.log(req.body)
+      console.log('in signup')
+      console.log(req.body)
 
       var newWeb = ''
       var newYoutube = ''
@@ -106,6 +107,9 @@ router.post(
 router.post('/login', async (req,res) => {
 
     const { email, password } = req.body;
+
+    console.log('in login')
+      console.log(req.body)
 
    try {
     const user = await prisma.affiliate.findUnique({
