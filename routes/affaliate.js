@@ -108,8 +108,7 @@ router.post('/login', async (req,res) => {
 
     const { email, password } = req.body;
 
-    console.log('in login')
-      console.log(req.body)
+    
 
    try {
     const user = await prisma.affiliate.findUnique({
