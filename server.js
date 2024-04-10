@@ -19,18 +19,18 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use('/affaliate',require('./routes/affaliate'))
 
-app.get('/',(req,res) => {
+// app.get('/',(req,res) => {
 
-    const cardsData = [
-        { icon: '📘', type: 'Affailates', value: 45 },
-        { icon: '💵', type: 'Payment', value: 450 },
-        { icon: '📈', type: 'Total Payment', value: 7500 },
-        // Add more as needed
-      ];
+//     const cardsData = [
+//         { icon: '📘', type: 'Affailates', value: 45 },
+//         { icon: '💵', type: 'Payment', value: 450 },
+//         { icon: '📈', type: 'Total Payment', value: 7500 },
+//         // Add more as needed
+//       ];
     
     
-      res.render('home', { cards: cardsData,title: 'dashboard',user: 'Gaurav', code: '007JB' });
-})
+//       res.render('home', { cards: cardsData,title: 'dashboard',user: 'Gaurav', code: '007JB' });
+// })
 
 
 

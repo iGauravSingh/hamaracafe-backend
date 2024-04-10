@@ -5,6 +5,7 @@ const { prisma } = require("../db");
 const { check, validationResult } = require("express-validator");
 const bcrypt = require("bcrypt");
 const JWT = require("jsonwebtoken");
+const { authenticateToken } = require("../middlewares/auth");
 
 
 
@@ -55,43 +56,48 @@ router.post(
         newInsta = intagram
       }
   
-      const user = await prisma.affiliate.findUnique({
-        where: {
-          email,
-        },
-      });
-  
-      if (user) {
-        return res.status(400).json({
-          errors: [{ msg: "This username already exists" }],
-        });
+      try {
+        const user = await prisma.affiliate.findUnique({
+            where: {
+              email,
+            },
+          });
+      
+          if (user) {
+            return res.status(400).json({
+              errors: [{ msg: "This username already exists" }],
+            });
+          }
+          const hashedPassword = await bcrypt.hash(password, 10);
+      
+          const newUser = await prisma.affiliate.create({
+            data: {
+              email,
+              name: name,
+              password: hashedPassword,
+              mobile,
+              website: newWeb,
+              youtube: newYoutube,
+              intagram: newInsta
+            },
+            select: {
+              id: true,
+              name: true,
+              email: true,
+            },
+          });
+      
+          const token = await JWT.sign(newUser, process.env.JSON_WEB_TOKEN_SECRET, {
+            expiresIn: 3600000,
+          });
+          return res.json({
+            user: newUser,
+            token,
+          });
+      } catch (error) {
+        res.json({"message": error})
       }
-      const hashedPassword = await bcrypt.hash(password, 10);
-  
-      const newUser = await prisma.affiliate.create({
-        data: {
-          email,
-          name: name,
-          password: hashedPassword,
-          mobile,
-          website: newWeb,
-          youtube: newYoutube,
-          intagram: newInsta
-        },
-        select: {
-          id: true,
-          name: true,
-          email: true,
-        },
-      });
-  
-      const token = await JWT.sign(newUser, process.env.JSON_WEB_TOKEN_SECRET, {
-        expiresIn: 3600000,
-      });
-      return res.json({
-        user: newUser,
-        token,
-      });
+      
     }
   );
   
@@ -101,50 +107,71 @@ router.post('/login', async (req,res) => {
 
     const { email, password } = req.body;
 
+   try {
     const user = await prisma.affiliate.findUnique({
-      where: {
-        email,
-      },
-    });
-  
-    if (!user) {
-      return res.status(400).json({
-        errors: [{ msg: "Invalid Credentials" }],
+        where: {
+          email,
+        },
       });
-    }
-  
-    const isMatch = await bcrypt.compare(password, user.password);
-  
-    if (!isMatch) {
-      return res.status(400).json({
-        errors: [{ msg: "Invalid Credentials" }],
+    
+      if (!user) {
+        return res.status(400).json({
+          errors: [{ msg: "Invalid Credentials" }],
+        });
+      }
+    
+      const isMatch = await bcrypt.compare(password, user.password);
+    
+      if (!isMatch) {
+        return res.status(400).json({
+          errors: [{ msg: "Invalid Credentials" }],
+        });
+      }
+    
+      const sendingPayload = {
+        id: user.id,
+        email: user.email,
+      };
+    
+      //console.log(user)
+      const userPayload = {
+        id: user.id,
+        email: user.email,
+        username: user.name,
+      };
+      const token = await JWT.sign(userPayload, process.env.JSON_WEB_TOKEN_SECRET, {
+        expiresIn: 3600000,
       });
-    }
-  
-    const sendingPayload = {
-      id: user.id,
-      email: user.email,
-    };
-  
-    //console.log(user)
-    const userPayload = {
-      id: user.id,
-      email: user.email,
-      username: user.name,
-    };
-    const token = await JWT.sign(userPayload, process.env.JSON_WEB_TOKEN_SECRET, {
-      expiresIn: 3600000,
-    });
-    return res.json({
-      user: sendingPayload,
-      token,
-    });
+      
+      return res.json({
+        user: sendingPayload,
+        token,
+      });
+   } catch (error) {
+    res.json({"message":error})
+   }
 
 })
 
 // delete affailate 
 router.delete('/delete/:id', async (req,res) => {
     
+})
+
+// send dashboard on authenticating
+router.get('/dashboard', authenticateToken ,async (req,res) => {
+
+
+        const cardsData = [
+        { icon: '📘', type: 'Affailates', value: 45 },
+        { icon: '💵', type: 'Payment', value: 450 },
+        { icon: '📈', type: 'Total Payment', value: 7500 },
+        // Add more as needed
+      ];
+    
+    
+      res.render('home', { cards: cardsData,title: 'dashboard',user: 'Gaurav', code: '007JB' });
+
 })
 
 module.exports = router;
