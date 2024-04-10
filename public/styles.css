@@ -1,0 +1,94 @@
+/* styles.css */
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.dashboard-container {
+    display: flex;
+    height: 100%;
+}
+
+.sidebar {
+    width: 20%;
+    background-color: #f0f0f0;
+    padding: 20px;
+}
+.sidebar ul {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    
+}
+.sidebar li {
+    list-style-type: none;
+}
+.sidebar li a {
+    text-decoration: none;
+}
+
+.main-content {
+    width: 80%;
+    padding: 20px;
+    
+}
+
+.card-content {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.card {
+    width: calc(23.333% - 40px); /* Adjust based on your preference */
+    height: calc(23.333% - 40px);
+    margin: 10px;
+    padding: 20px;
+    box-shadow: 0 0 10px #ccc;
+    display: flex;
+    align-items: center;
+}
+
+.card p {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.icon {
+    font-size: 24px;
+    margin-right: 10px;
+}
+
+/* ///////////// styles for 404 not found page  */
+
+.not-found {
+    text-align: center;
+    padding: 50px;
+}
+
+.not-found h1 {
+    font-size: 96px;
+    margin-bottom: 0;
+}
+
+.not-found h2 {
+    font-size: 48px;
+    margin: 0;
+}
+
+.not-found p {
+    margin: 20px 0;
+    font-size: 20px;
+}
+
+.not-found a {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 5px;
+}

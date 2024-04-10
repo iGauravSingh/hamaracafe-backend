@@ -1,0 +1,23 @@
+{{! Extend the main layout }}
+{{!< layout }}
+
+<div class="dashboard-container">
+    <div class="sidebar">
+        <h3>Welcome {{user}}</h3>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/logout">Logout</a></li>
+        </ul>
+    </div>
+    <div class="main-content">
+        <h3>Affiliate Link : https://hamaracafe.com/job-work-form2/?coupon={{code}}</h3>
+        <div class="card-content">
+            {{#each cards}}
+            <div class="card">
+                <span class="icon">{{this.icon}}</span>
+                <p>{{this.type}} <b>{{this.value}}</b> </p>
+            </div>
+        {{/each}}
+        </div>
+    </div>
+</div>
