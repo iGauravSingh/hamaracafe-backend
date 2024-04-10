@@ -6,7 +6,7 @@
         <h3>Welcome {{user}}</h3>
         <ul>
             <li><a href="/">Home</a></li>
-            <li><a href="/logout">Logout</a></li>
+            <li><a href="#" id="logout">Logout</a></li>
         </ul>
     </div>
     <div class="main-content">
@@ -21,3 +21,14 @@
         </div>
     </div>
 </div>
+<script>
+document.getElementById('logout').addEventListener('click', function(event) {
+  event.preventDefault(); // Prevent the default action of the link
+
+  // Delete the JWT token cookie by setting its expiry to a past date
+  document.cookie = 'jwtToken=; Path=/;';
+
+  // Redirect to the home page or login page
+  window.location.href = '/'; // Adjust the URL to your site's home or login page
+});
+</script>
