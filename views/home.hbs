@@ -25,10 +25,12 @@
 document.getElementById('logout').addEventListener('click', function(event) {
   event.preventDefault(); // Prevent the default action of the link
 
+console.log('clicked on logut')
+
   // Delete the JWT token cookie by setting its expiry to a past date
   document.cookie = 'jwtToken=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
 
   // Redirect to the home page or login page
-  window.location.href = '/'; // Adjust the URL to your site's home or login page
+  window.location.href = 'https://hamaracafe.com/'; // Adjust the URL to your site's home or login page
 });
 </script>
