@@ -22,10 +22,11 @@ app.use('/affaliate',require('./routes/affaliate'))
 // app.get('/',(req,res) => {
 
 //     const cardsData = [
-//         { icon: '📘', type: 'Affailates', value: 45 },
-//         { icon: '💵', type: 'Payment', value: 450 },
-//         { icon: '📈', type: 'Total Payment', value: 7500 },
-//         // Add more as needed
+//         { icon: '☝🏻', type: 'Total Clicks', value: 45 },
+//         { icon: 'ℹ️', type: 'Total Inquiries', value: 0 },
+//         { icon: '⚙️', type: 'Work Going On', value: 0 },
+//         { icon: '📣', type: 'Latest Update', value: 0 },
+//         { icon: '😄', type: 'Help & Support', value: 0 },
 //       ];
     
     

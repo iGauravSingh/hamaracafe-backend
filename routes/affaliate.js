@@ -165,11 +165,12 @@ router.delete('/delete/:id', async (req,res) => {
 router.get('/dashboard', authenticateToken ,async (req,res) => {
 
 
-        const cardsData = [
-        { icon: '📘', type: 'Affailates', value: 45 },
-        { icon: '💵', type: 'Payment', value: 450 },
-        { icon: '📈', type: 'Total Payment', value: 7500 },
-        // Add more as needed
+    const cardsData = [
+        { icon: '☝🏻', type: 'Total Clicks', value: 45 },
+        { icon: 'ℹ️', type: 'Total Inquiries', value: 0 },
+        { icon: '⚙️', type: 'Work Going On', value: 0 },
+        { icon: '📣', type: 'Latest Update', value: 0 },
+        { icon: '😄', type: 'Help & Support', value: 0 },
       ];
     
     

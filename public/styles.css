@@ -41,8 +41,8 @@ body, html {
 }
 
 .card {
-    width: calc(23.333% - 40px); /* Adjust based on your preference */
-    height: calc(23.333% - 40px);
+    width: 300px;
+    height: 120px;
     margin: 10px;
     padding: 20px;
     box-shadow: 0 0 10px #ccc;
