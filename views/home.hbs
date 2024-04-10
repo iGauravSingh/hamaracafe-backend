@@ -22,7 +22,8 @@
     </div>
 </div>
 <script>
-document.getElementById('logout').addEventListener('click', function(event) {
+    document.addEventListener('DOMContentLoaded', function() {
+  document.getElementById('logout').addEventListener('click', function(event) {
   event.preventDefault(); // Prevent the default action of the link
 
 console.log('clicked on logut')
@@ -33,4 +34,6 @@ console.log('clicked on logut')
   // Redirect to the home page or login page
   window.location.href = 'https://hamaracafe.com/'; // Adjust the URL to your site's home or login page
 });
+});
+
 </script>
