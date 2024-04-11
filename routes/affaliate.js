@@ -1,3 +1,4 @@
+const { v4: uuidv4 } = require('uuid');
 const router = require("express").Router();
 const { prisma } = require("../db");
 // const { authenticateToken } = require("../middlewares/auth");
@@ -79,7 +80,8 @@ router.post(
               mobile,
               website: newWeb,
               youtube: newYoutube,
-              intagram: newInsta
+              intagram: newInsta,
+              coupon: uuidv4()
             },
             select: {
               id: true,
