@@ -2,7 +2,7 @@
 const router = require("express").Router();
 const bcrypt = require("bcrypt");
 const JWT = require("jsonwebtoken");
-const { v4: uuidv4 } = require('uuid');
+const crypto = require('crypto');
 const { prisma } = require("../db");
 // const { authenticateToken } = require("../middlewares/auth");
 
@@ -72,11 +72,14 @@ router.post(
               errors: [{ msg: "This username already exists" }],
             });
           }
+
           const hashedPassword = await bcrypt.hash(password, 10);
 
-          const newCoupon = uuidv4().toString()
+          const uniqueString = crypto.randomBytes(16).toString('hex');
 
-          console.log(newCoupon)
+          
+
+          console.log(uniqueString)
       
           const newUser = await prisma.affiliate.create({
             data: {
@@ -87,7 +90,7 @@ router.post(
               website: newWeb,
               youtube: newYoutube,
               intagram: newInsta,
-              coupon: newCoupon,
+              coupon: uniqueString
             },
             select: {
               id: true,
@@ -104,7 +107,7 @@ router.post(
             token,
           });
       } catch (error) {
-        res.json({"message": error})
+        res.json({"message": "so error in sign up"})
       }
       
     }
