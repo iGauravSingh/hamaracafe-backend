@@ -74,7 +74,7 @@ router.post(
           }
           const hashedPassword = await bcrypt.hash(password, 10);
 
-          const newCoupon = uuidv4()
+          const newCoupon = uuidv4().toString()
 
           console.log(newCoupon)
       
