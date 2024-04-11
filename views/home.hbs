@@ -10,7 +10,12 @@
         </ul>
     </div>
     <div class="main-content">
-        <h3>Affiliate Link : https://hamaracafe.com/job-work-form2/?coupon={{code}}</h3>
+        
+        <div>
+            <div id="hidden-data" hidden>{{linktoshare}}</div>
+            <h3>Coupon {{code}}</h3>
+            <button id="shareButton">Share</button>
+        </div>
         <div class="card-content">
             {{#each cards}}
             <div class="card">
@@ -22,6 +27,7 @@
     </div>
 </div>
 <script>
+    
     document.addEventListener('DOMContentLoaded', function() {
   document.getElementById('logout').addEventListener('click', function(event) {
   event.preventDefault(); // Prevent the default action of the link
