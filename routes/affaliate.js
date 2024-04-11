@@ -83,7 +83,7 @@ router.post(
               website: newWeb,
               youtube: newYoutube,
               intagram: newInsta,
-              
+              coupon: uuidv4()
             },
             select: {
               id: true,
