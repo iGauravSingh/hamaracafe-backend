@@ -22,5 +22,5 @@ model Affiliate {
   youtube  String?
   intagram String?
   password String
-  coupon   String?
+  coupon   String
 }
