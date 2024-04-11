@@ -162,7 +162,7 @@ router.delete('/delete/:id', async (req,res) => {
 })
 
 // send dashboard on authenticating
-router.get('/dashboard', authenticateToken ,async (req,res) => {
+router.get('/dashboard' ,authenticateToken ,async (req,res) => {
 
 
     const cardsData = [
