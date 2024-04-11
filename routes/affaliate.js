@@ -74,7 +74,9 @@ router.post(
           }
           const hashedPassword = await bcrypt.hash(password, 10);
 
-          const newCoupon = new String(uuidv4())
+          const newCoupon = uuidv4()
+
+          console.log(newCoupon)
       
           const newUser = await prisma.affiliate.create({
             data: {
@@ -85,7 +87,7 @@ router.post(
               website: newWeb,
               youtube: newYoutube,
               intagram: newInsta,
-              coupon: newCoupon
+              coupon: newCoupon,
             },
             select: {
               id: true,
