@@ -73,6 +73,8 @@ router.post(
             });
           }
           const hashedPassword = await bcrypt.hash(password, 10);
+
+          const newCoupon = new String(uuidv4())
       
           const newUser = await prisma.affiliate.create({
             data: {
@@ -83,7 +85,7 @@ router.post(
               website: newWeb,
               youtube: newYoutube,
               intagram: newInsta,
-              coupon: uuidv4()
+              coupon: newCoupon
             },
             select: {
               id: true,
