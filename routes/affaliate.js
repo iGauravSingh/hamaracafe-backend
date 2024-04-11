@@ -1,11 +1,13 @@
-const { v4: uuidv4 } = require('uuid');
+
 const router = require("express").Router();
+const bcrypt = require("bcrypt");
+const JWT = require("jsonwebtoken");
+const { v4: uuidv4 } = require('uuid');
 const { prisma } = require("../db");
 // const { authenticateToken } = require("../middlewares/auth");
 
 const { check, validationResult } = require("express-validator");
-const bcrypt = require("bcrypt");
-const JWT = require("jsonwebtoken");
+
 const { authenticateToken } = require("../middlewares/auth");
 
 
