@@ -174,7 +174,7 @@ router.get('/dashboard' ,authenticateToken ,async (req,res) => {
       ];
     
     
-      res.render('home', { cards: cardsData,title: 'dashboard',user: 'Gaurav', code: '007JB',linktoshare: "https://hamaracafe.com/job-work-form2/?coupon=007BJ" });
+      res.render('home', { cards: cardsData,title: 'dashboard',user: 'Gaurav', code: '007JB', sharelink: 'https://hamaracafe.com/job-work-form2/?coupon=7789999' });
 
 })
 

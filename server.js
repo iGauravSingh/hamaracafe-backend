@@ -30,7 +30,7 @@ app.use('/affaliate',require('./routes/affaliate'))
 //       ];
     
     
-//       res.render('home', { cards: cardsData,title: 'dashboard',user: 'Gaurav', code: '007JB' });
+//       res.render('home', { cards: cardsData,title: 'dashboard',user: 'Gaurav', code: '007JB', sharelink: 'https://hamaracafe.com/job-work-form2/?coupon=7789999' });
 // })
 
 

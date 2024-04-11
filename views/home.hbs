@@ -12,7 +12,7 @@
     <div class="main-content">
         
         <div>
-            <div id="hidden-data" hidden>{{linktoshare}}</div>
+            <p id="hidden-data" hidden>{{sharelink}}</p>
             <h3>Coupon {{code}}</h3>
             <button id="shareButton">Share</button>
         </div>
@@ -27,6 +27,15 @@
     </div>
 </div>
 <script>
+
+    const linkToShare= document.getElementById('hidden-data').textContent;
+
+const shareButton = document.getElementById('shareButton');
+shareButton.addEventListener('click', function() {
+  const whatsAppUrl = `https://web.whatsapp.com/send?text=${linkToShare}`;
+// Open a new window for WhatsApp Web
+window.open(whatsAppUrl, '_blank');
+});
     
     document.addEventListener('DOMContentLoaded', function() {
   document.getElementById('logout').addEventListener('click', function(event) {
