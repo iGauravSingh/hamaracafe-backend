@@ -119,7 +119,7 @@ router.post('/login', async (req,res) => {
 
     const { email, password } = req.body;
 
-    
+    console.log(req.body)
 
    try {
     const user = await prisma.affiliate.findUnique({
@@ -127,6 +127,8 @@ router.post('/login', async (req,res) => {
           email,
         },
       });
+
+      console.log(user)
     
       if (!user) {
         return res.status(400).json({
@@ -183,9 +185,23 @@ router.get('/dashboard' ,authenticateToken ,async (req,res) => {
         { icon: '📣', type: 'Latest Update', value: 0 },
         { icon: '😄', type: 'Help & Support', value: 0 },
       ];
+
+      try {
+        console.log(req.user)
+        
+        const user = await prisma.affiliate.findUnique({
+          where: {
+            email: req.user.email,
+          },
+        });
+        res.render('home', { cards: cardsData,title: 'dashboard',user: user.name, code: user.coupon, sharelink: `https://hamaracafe.com/job-work-form2/?coupon=${user.coupon}` });
+
+      } catch (error) {
+        res.json({message: "someerror in dashboard user fetching"})
+      }
     
     
-      res.render('home', { cards: cardsData,title: 'dashboard',user: 'Gaurav', code: '007JB', sharelink: 'https://hamaracafe.com/job-work-form2/?coupon=7789999' });
+      
 
 })
 
