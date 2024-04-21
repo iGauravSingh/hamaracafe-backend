@@ -2,7 +2,8 @@
 const router = require("express").Router();
 const bcrypt = require("bcrypt");
 const JWT = require("jsonwebtoken");
-const crypto = require('crypto');
+// const crypto = require('crypto');
+const { v4: uuidv4 } = require('uuid');
 const { prisma } = require("../db");
 // const { authenticateToken } = require("../middlewares/auth");
 
@@ -41,7 +42,7 @@ router.post(
         });
       }
   
-      const { email, password, name, mobile, website,youtube,intagram } = req.body;
+      const { email, password, name, mobile, website,youtube,instagram } = req.body;
       console.log('in signup')
       console.log(req.body)
 
@@ -56,8 +57,8 @@ router.post(
         newYoutube = youtube
       }
 
-      if(intagram){
-        newInsta = intagram
+      if(instagram){
+        newInsta = instagram
       }
   
       try {
@@ -75,7 +76,7 @@ router.post(
 
           const hashedPassword = await bcrypt.hash(password, 10);
 
-          const uniqueString = crypto.randomBytes(16).toString('hex');
+          const uniqueString = uuidv4();
 
           
 
@@ -89,8 +90,8 @@ router.post(
               mobile,
               website: newWeb,
               youtube: newYoutube,
-              intagram: newInsta,
-              coupon: uniqueString,
+              instagram: newInsta,
+              affiliateCode: uniqueString,
             },
             select: {
               id: true,
@@ -107,7 +108,7 @@ router.post(
             token,
           });
       } catch (error) {
-        res.json({"message": "so error in sign up"})
+        res.json({"error": error})
       }
       
     }
@@ -147,6 +148,17 @@ router.post('/login', async (req,res) => {
       const sendingPayload = {
         id: user.id,
         email: user.email,
+        mobile: user.mobile,
+        name: user.name,
+        website: user.website,
+        youtube: user.youtube,
+        instagram: user.instagram,
+        affiliateCode: user.affiliateCode,
+        imageUrl: user.imageUrl,
+        totalClicks: user.totalClicks,
+        totalInquiry: user.totalInquiry,
+        workgoingon: user.workgoingon,
+        totalMoney: user.totalMoney
       };
     
       //console.log(user)
@@ -168,41 +180,22 @@ router.post('/login', async (req,res) => {
    }
 
 })
-
+//// PUT IT IN ADMIN
 // delete affailate 
 router.delete('/delete/:id', async (req,res) => {
     
 })
+////
 
-// send dashboard on authenticating
-router.get('/dashboard' ,authenticateToken ,async (req,res) => {
-
-
-    const cardsData = [
-        { icon: '☝🏻', type: 'Total Clicks', value: 45 },
-        { icon: 'ℹ️', type: 'Total Inquiries', value: 0 },
-        { icon: '⚙️', type: 'Work Going On', value: 0 },
-        { icon: '📣', type: 'Latest Update', value: 0 },
-        { icon: '😄', type: 'Help & Support', value: 0 },
-      ];
-
-      try {
-        console.log(req.user)
-        
-        const user = await prisma.affiliate.findUnique({
-          where: {
-            email: req.user.email,
-          },
-        });
-        res.render('home', { cards: cardsData,title: 'dashboard',user: user.name, code: user.coupon, sharelink: `https://hamaracafe.com/job-work-form2/?coupon=${user.coupon}` });
-
-      } catch (error) {
-        res.json({message: "someerror in dashboard user fetching"})
-      }
-    
-    
-      
+// Password Update 
+router.patch('/password-update', authenticateToken ,async (req,res) => {
 
 })
+
+// Image Update 
+router.patch('/imageupload', authenticateToken ,async (req,res) => {
+
+})
+
 
 module.exports = router;

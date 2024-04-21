@@ -1,0 +1,30 @@
+// send dashboard on authenticating
+router.get('/dashboard' ,authenticateToken ,async (req,res) => {
+
+
+    const cardsData = [
+        { icon: '☝🏻', type: 'Total Clicks', value: 45 },
+        { icon: 'ℹ️', type: 'Total Inquiries', value: 0 },
+        { icon: '⚙️', type: 'Work Going On', value: 0 },
+        { icon: '📣', type: 'Latest Update', value: 0 },
+        { icon: '😄', type: 'Help & Support', value: 0 },
+      ];
+
+      try {
+        console.log(req.user)
+        
+        const user = await prisma.affiliate.findUnique({
+          where: {
+            email: req.user.email,
+          },
+        });
+        res.render('home', { cards: cardsData,title: 'dashboard',user: user.name, code: user.coupon, sharelink: `https://hamaracafe.com/job-work-form2/?coupon=${user.coupon}` });
+
+      } catch (error) {
+        res.json({message: "someerror in dashboard user fetching"})
+      }
+    
+    
+      
+
+})

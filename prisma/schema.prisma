@@ -14,13 +14,65 @@ datasource db {
 }
 
 model Affiliate {
-  id       Int     @id @default(autoincrement())
+  id            Int      @id @default(autoincrement())
+  name          String
+  email         String   @unique
+  mobile        String
+  website       String?
+  youtube       String?
+  instagram     String?
+  password      String
+  affiliateCode String   @unique
+  imageUrl      String   @default("https://www.shutterstock.com/image-vector/blank-avatar-photo-place-holder-600nw-1095249842.jpg")
+  totalClicks   Int      @default(0)
+  totalInquiry  Int      @default(0)
+  workgoingon   Int      @default(0)
+  totalMoney    Int      @default(0)
+  createdAt     DateTime @default(now())
+}
+
+model Help {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String
+  mobile    String
+  query     String
+  createdAt DateTime @default(now())
+}
+
+model job {
+  id            Int      @id @default(autoincrement())
+  name          String
+  mobile        String
+  affiliateCode String   @default("hamara/111")
+  managedBy     String   @default("Kush")
+  createdAt     DateTime @default(now())
+}
+
+model withdraw {
+  id             Int      @id @default(autoincrement())
+  name           String
+  email          String
+  mobile         String
+  withdrawAmount Int      @default(0)
+  createdAt      DateTime @default(now())
+}
+
+model Latest {
+  id     Int    @id @default(autoincrement())
+  update String
+}
+
+model Banner {
+  id       Int    @id @default(autoincrement())
+  url      String
+  key      String
+  buttonId Int
+}
+
+model Admin {
+  id       Int    @id @default(autoincrement())
   name     String
-  email    String  @unique
-  mobile   String
-  website  String?
-  youtube  String?
-  intagram String?
+  email    String @unique
   password String
-  coupon   String
 }

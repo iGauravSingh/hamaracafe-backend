@@ -19,20 +19,7 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use('/affaliate',require('./routes/affaliate'))
 
-// app.get('/',(req,res) => {
-
-//     const cardsData = [
-//         { icon: '☝🏻', type: 'Total Clicks', value: 45 },
-//         { icon: 'ℹ️', type: 'Total Inquiries', value: 0 },
-//         { icon: '⚙️', type: 'Work Going On', value: 0 },
-//         { icon: '📣', type: 'Latest Update', value: 0 },
-//         { icon: '😄', type: 'Help & Support', value: 0 },
-//       ];
-    
-    
-//       res.render('home', { cards: cardsData,title: 'dashboard',user: 'Gaurav', code: '007JB', sharelink: 'https://hamaracafe.com/job-work-form2/?coupon=7789999' });
-// })
-
+app.use('/admin',require('./routes/admin'))
 
 
 
