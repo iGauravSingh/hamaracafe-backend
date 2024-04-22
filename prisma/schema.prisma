@@ -32,12 +32,13 @@ model Affiliate {
 }
 
 model Help {
-  id        Int      @id @default(autoincrement())
-  name      String
-  email     String
-  mobile    String
-  query     String
-  createdAt DateTime @default(now())
+  id            Int      @id @default(autoincrement())
+  name          String
+  email         String
+  mobile        String
+  query         String
+  affiliateCode String
+  createdAt     DateTime @default(now())
 }
 
 model job {
@@ -54,6 +55,7 @@ model withdraw {
   name           String
   email          String
   mobile         String
+  affiliateCode  String
   withdrawAmount Int      @default(0)
   createdAt      DateTime @default(now())
 }

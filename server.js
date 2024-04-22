@@ -21,6 +21,8 @@ app.use('/affaliate',require('./routes/affaliate'))
 
 app.use('/admin',require('./routes/admin'))
 
+app.use('/help',require('./routes/help'))
+
 
 
 
