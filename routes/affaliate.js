@@ -7,6 +7,15 @@ const { v4: uuidv4 } = require('uuid');
 const { prisma } = require("../db");
 // const { authenticateToken } = require("../middlewares/auth");
 
+const multer = require("multer")
+const s3 = require('../scripts/aws-config')
+
+const storage = multer.memoryStorage();
+const upload = multer({ storage })
+
+
+
+
 const { check, validationResult } = require("express-validator");
 
 const { authenticateToken } = require("../middlewares/auth");
@@ -189,13 +198,73 @@ router.delete('/delete/:id', async (req,res) => {
 
 // Password Update 
 router.patch('/password-update', authenticateToken ,async (req,res) => {
+const { password } = req.body;
+if(!password){
+  res.status(400).json({msg: "password feild emply"})
+}
+
+//Hash the new password
+// const saltRounds = 10; // You can adjust the number of salt rounds as needed
+const hashedPassword = await bcrypt.hash(password, 10);
+
+try {
+  const updatedAffiliate = await prisma.affiliate.update({
+    where: { email: req.user.email },
+    data: {
+      password: hashedPassword
+    }
+  })
+  return res.status(200).json({ msg: "success" });
+} catch (error) {
+  return res.status(500).json({ errors: error });
+}
 
 })
+
+//
 
 // Image Update 
-router.patch('/imageupload', authenticateToken ,async (req,res) => {
+router.patch('/imageupload',upload.single("file"),async (req,res) => {
+
+  const { buffer }  = req.file;
+
+  const {imagename,userid} = req.body;
+
+  console.log('from image upload',req.body)
+
+  console.log(imagename)
+  console.log(process.env.AWS_REGION)
+
+  if(!imagename) res.status(400).json({error: 'invalid data'})
+
+  const params = {
+    Bucket: "new-hamaracafe-testing-limited",
+    Key: imagename,
+        Body: buffer,
+        ContentType: req.file.mimetype,
+  }
+
+  try {
+
+    console.log('from try in user image upload upper')
+    // upload to s3 
+    const response = await s3.upload(params).promise();
+
+    console.log('from try in user image upload upload', response)
+
+    const updateUserimage = await prisma.affiliate.update({
+      where: { id: parseInt(userid)},
+      data: {
+        imageUrl: response.Location,
+      }
+    })
+    res.status(201).json({success: true})
+  } catch (error) {
+    console.log('error in storing image url', error)
+  }
 
 })
 
+//
 
 module.exports = router;

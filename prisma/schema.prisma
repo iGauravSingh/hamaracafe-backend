@@ -69,12 +69,11 @@ model Banner {
   id       Int    @id @default(autoincrement())
   url      String
   key      String
-  buttonId Int
+  buttonId Int    @unique
 }
 
 model Admin {
   id       Int    @id @default(autoincrement())
-  name     String
   email    String @unique
   password String
 }
