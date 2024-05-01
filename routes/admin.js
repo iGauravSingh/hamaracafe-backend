@@ -136,7 +136,7 @@ router.get("/getallJob", async (req, res) => {
 
 router.post("/addjob", async (req, res) => {
   try {
-    const { name, mobile, affiliateCode } = req.body;
+    const { name, mobile, affiliateCode,work } = req.body;
 
     console.log(req.body);
     var newAffCode = "";
@@ -149,6 +149,7 @@ router.post("/addjob", async (req, res) => {
           name,
           mobile,
           affiliateCode: newAffCode,
+          work: work,
         },
       });
       res.status(200).json({ success: true });
@@ -161,6 +162,7 @@ router.post("/addjob", async (req, res) => {
           name,
           mobile,
           affiliateCode: newAffCode,
+          work: work,
         },
       });
 

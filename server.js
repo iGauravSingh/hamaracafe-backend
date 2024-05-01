@@ -23,6 +23,8 @@ app.use('/admin',require('./routes/admin'))
 
 app.use('/help',require('./routes/help'))
 
+app.use('/franchise',require('./routes/franchise'))
+
 
 
 

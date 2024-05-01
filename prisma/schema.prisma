@@ -46,6 +46,7 @@ model job {
   name          String
   mobile        String
   affiliateCode String   @default("hamara/111")
+  work          String?
   managedBy     String   @default("Kush")
   createdAt     DateTime @default(now())
 }
@@ -76,4 +77,32 @@ model Admin {
   id       Int    @id @default(autoincrement())
   email    String @unique
   password String
+}
+
+model Franchise {
+  id            Int             @id @default(autoincrement())
+  name          String
+  mobile        String          @unique
+  password      String
+  about         String?
+  imageUrl      String          @default("https://www.shutterstock.com/image-vector/blank-avatar-photo-place-holder-600nw-1095249842.jpg")
+  createdAt     DateTime        @default(now())
+  franchisework Franchisework[]
+}
+
+model Letter {
+  id         Int    @id @default(autoincrement())
+  letterId   Int    @unique
+  name       String
+  letterLink String
+}
+
+model Franchisework {
+  id             Int       @id @default(autoincrement())
+  createdAt      DateTime  @default(now())
+  detail         String
+  franchiseName  String
+  franchiseId    Int
+  completestatus String    @default("no")
+  franchise      Franchise @relation(fields: [franchiseId], references: [id])
 }
