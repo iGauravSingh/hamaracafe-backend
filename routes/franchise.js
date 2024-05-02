@@ -216,7 +216,7 @@ router.get('/allfranchie', async (req,res) => {
 // Get All Work Of An Franchise
 router.get('/getall/:id', async(req,res) => {
   const  id  = req.params.id
-  // console.log(id)
+  // console.log('from get all work of id',id)
   if(!id){
     res.status(400).json({error: 'no id provided'})
   }
