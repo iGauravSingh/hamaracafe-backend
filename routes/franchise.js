@@ -398,6 +398,16 @@ router.post('/banner-upload', upload.single("file") ,async(req,res) => {
   })
 
 
+  router.get('/fetch-letter', async(req,res) => {
+    try {
+      const letterData = await prisma.letter.findMany({})
+      res.status(200).json(letterData)
+    } catch (error) {
+      console.log('error in fetching image letter', error)
+    }
+  })
+
+
 
 
 //////////////////////////
