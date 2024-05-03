@@ -43,8 +43,8 @@ router.post(
       }
   
       const { password, name, mobile, option } = req.body;
-      console.log('in franchise signup')
-      console.log(req.body)
+      // console.log('in franchise signup')
+      // console.log(req.body)
 
      
   
@@ -102,7 +102,7 @@ router.post('/login', async (req,res) => {
 
     const { mobile, password } = req.body;
 
-    console.log(req.body)
+    // console.log(req.body)
 
    try {
     const user = await prisma.franchise.findUnique({
@@ -111,7 +111,7 @@ router.post('/login', async (req,res) => {
         },
       });
 
-      console.log(user)
+      // console.log(user)
     
       if (!user) {
         return res.status(400).json({
@@ -162,10 +162,10 @@ router.patch('/imageupload',upload.single("file"),async (req,res) => {
   
     const {imagename,userid} = req.body;
   
-    console.log('from image upload',req.body)
+    // console.log('from image upload',req.body)
   
-    console.log(imagename)
-    console.log(process.env.AWS_REGION)
+    // console.log(imagename)
+    // console.log(process.env.AWS_REGION)
   
     if(!imagename) res.status(400).json({error: 'invalid data'})
   
@@ -178,11 +178,11 @@ router.patch('/imageupload',upload.single("file"),async (req,res) => {
   
     try {
   
-      console.log('from try in user image upload upper')
+      // console.log('from try in user image upload upper')
       // upload to s3 
       const response = await s3.upload(params).promise();
   
-      console.log('from try in user image upload upload', response)
+      // console.log('from try in user image upload upload', response)
   
       const updateUserimage = await prisma.franchise.update({
         where: { id: parseInt(userid)},
@@ -243,18 +243,18 @@ router.post('/addwork', async (req,res) => {
 
     try {
 
-      console.log("first in try")
+      // console.log("first in try")
       // First, check if the franchise exists
     const franchise = await prisma.franchise.findUnique({
       where: { id: parseInt(franchiseId) },
     });
 
-    console.log('after find franchise',franchise)
+    // console.log('after find franchise',franchise)
     if (!franchise) {
       return res.status(404).json({ error: "Franchise not found" });
     }
 
-    console.log('Before nEw work')
+    // console.log('Before nEw work')
         const newWork = await prisma.franchisework.create({
             data: {
                 detail: detail,
@@ -335,8 +335,8 @@ router.post('/banner-upload', upload.single("file") ,async(req,res) => {
   
     const {imagename,letterId} = req.body;
   
-    console.log(imagename,letterId)
-    console.log(process.env.AWS_REGION)
+    // console.log(imagename,letterId)
+    // console.log(process.env.AWS_REGION)
   
     if(!imagename || !letterId) res.status(400).json({error: 'invalid data'})
   
@@ -349,17 +349,17 @@ router.post('/banner-upload', upload.single("file") ,async(req,res) => {
   
     try {
   
-      console.log('from try in banner upload upper')
+      // console.log('from try in banner upload upper')
       // upload to s3 
       const response = await s3.upload(params).promise();
   
-      console.log('from try in banner upload', response)
+      // console.log('from try in banner upload', response)
   
       if(response.Location){
         const findBanner = await prisma.letter.findUnique({
           where: { letterId: parseInt(letterId)}
         })
-        console.log('from if location ', findBanner)
+        // console.log('from if location ', findBanner)
         if(findBanner){
           try {
             const updateBannerimage = await prisma.letter.update({
@@ -369,7 +369,7 @@ router.post('/banner-upload', upload.single("file") ,async(req,res) => {
                 name: imagename,
               }
             })
-            console.log('updated banner image', updateBannerimage)
+            // console.log('updated banner image', updateBannerimage)
           res.status(201).json({success: true})
           } catch (error) {
             console.log('error in updating')
@@ -383,7 +383,7 @@ router.post('/banner-upload', upload.single("file") ,async(req,res) => {
               letterId: parseInt(letterId, 10)
             }
           })
-          console.log('new banner image', newImage)
+          // console.log('new banner image', newImage)
           res.status(201).json({success: "Uploaded Successfully"})
         }
         

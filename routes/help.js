@@ -9,7 +9,7 @@ const { authenticateToken } = require("../middlewares/auth");
 router.post('/add-querry', authenticateToken ,async (req,res) => {
     const { name, email , mobile , affiliateCode, query } = req.body
 
-    console.log(req.body)
+    // console.log(req.body)
 
     try {
         const newHelp = await prisma.help.create({
@@ -21,10 +21,10 @@ router.post('/add-querry', authenticateToken ,async (req,res) => {
                 affiliateCode
             }
         })
-        console.log(newHelp)
+        // console.log(newHelp)
         res.status(201).json({ message: 'success' })
     } catch (error) {
-        console.log('error communicating database')
+        // console.log('error communicating database')
         res.status(400).json({ message: 'server Error' })
     }
 
