@@ -17,6 +17,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 
+// default
+app.get('/',(req,res)=>{
+    res.send("Hello from hamara cafe")
+})
+
+
 app.use('/affaliate',require('./routes/affaliate'))
 
 app.use('/admin',require('./routes/admin'))
@@ -26,10 +32,7 @@ app.use('/help',require('./routes/help'))
 app.use('/franchise',require('./routes/franchise'))
 
 
-// default
-app.use('/',(req,res)=>{
-    res.send("Hello from hamara cafe")
-})
+
 
 
 // error
