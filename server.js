@@ -26,6 +26,10 @@ app.use('/help',require('./routes/help'))
 app.use('/franchise',require('./routes/franchise'))
 
 
+// default
+app.use('/',(req,res)=>{
+    res.send("Hello from hamara cafe")
+})
 
 
 // error
