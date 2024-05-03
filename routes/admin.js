@@ -202,6 +202,21 @@ router.post("/addjob", async (req, res) => {
 //
 
 // UPDATE change MANAGER of JOB
+router.patch('/change-manager', async(req,res) => {
+  const { jobId, managerName } = req.body
+  if(!jobId || !managerName){
+    res.status(400).json({error: "Invalid Data"})
+  }
+  try {
+    const updateJob = await prisma.job.update({
+      where: { id: parseInt(jobId)},
+      data: {managedBy: managerName}
+    })
+    res.status(201).json(updateJob)
+  } catch (error) {
+    console.log("error in update change job manager",error)
+  }
+})
 
 //
 
