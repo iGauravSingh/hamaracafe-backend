@@ -393,7 +393,7 @@ router.post('/banner-upload', upload.single("file") ,async(req,res) => {
   if(!imagename || !buttonId) res.status(400).json({error: 'invalid data'})
 
   const params = {
-    Bucket: "new-hamaracafe-testing-limited",
+    Bucket: "hamaracafeimagehandle",
     Key: imagename,
         Body: buffer,
         ContentType: req.file.mimetype,
