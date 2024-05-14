@@ -21,7 +21,11 @@ const upload = multer({ storage })
 // Get All Affailates List
 router.get("/getallAffiliates", async (req, res) => {
   try {
-    const allAffiliates = await prisma.affiliate.findMany({});
+    const allAffiliates = await prisma.affiliate.findMany({
+      orderBy: {
+        createdAt: 'desc'
+      }
+    });
     res.json(allAffiliates);
   } catch (error) {
     console.log("error communicating database");
@@ -103,7 +107,11 @@ router.get("/getallHelp", async (req, res) => {
   //   ]
 
   try {
-    const allHelp = await prisma.help.findMany({});
+    const allHelp = await prisma.help.findMany({
+      orderBy: {
+        createdAt: 'desc'
+      }
+    });
     res.json(allHelp);
   } catch (error) {
     console.log("error communicating database");
@@ -125,7 +133,11 @@ router.get("/getallHelp", async (req, res) => {
 
 router.get("/getallJob", async (req, res) => {
   try {
-    const allJob = await prisma.job.findMany({});
+    const allJob = await prisma.job.findMany({
+      orderBy: {
+        createdAt: 'desc'
+      }
+    });
     res.json(allJob);
   } catch (error) {
     console.log("error communicating database");
@@ -250,7 +262,11 @@ router.delete("/delete-job/:id", async (req, res) => {
 
 router.get("/getallwithdraw", async (req, res) => {
   try {
-    const allWithdraw = await prisma.withdraw.findMany({});
+    const allWithdraw = await prisma.withdraw.findMany({
+      orderBy: {
+        createdAt: 'desc'
+      }
+    });
     res.json(allWithdraw);
   } catch (error) {
     console.log("error communicating database");
@@ -526,7 +542,7 @@ router.post(
 router.post('/admin-login', async (req,res) => {
   const {  email ,password } = req.body;
 
-  console.log(req.body)
+  //console.log(req.body)
 
   try {
     const user = await prisma.admin.findUnique({
@@ -535,7 +551,7 @@ router.post('/admin-login', async (req,res) => {
       },
     })
 
-    console.log(user)
+    // console.log(user)
 
     if (!user) {
       return res.status(400).json({
@@ -601,6 +617,55 @@ router.patch('/password-update', authenticateToken ,async (req,res) => {
   }
   
   })
+//
+
+// User Reset Password
+router.patch('/user-password-update',authenticateToken, async (req,res) => {
+  const { adminpassword, userEmail } = req.body;
+  const adminemail = 'hamara@admin.com'
+  if(!adminpassword){
+    res.status(400).json({msg: "Unauthorized"})
+  }
+
+  try {
+    const admin = await prisma.admin.findUnique({
+      where: {
+        email: adminemail,
+      },
+    })
+
+    // console.log(user)
+
+    if (!user) {
+      return res.status(400).json({
+        errors: [{ msg: "Invalid Credentials" }],
+      });
+    }
+
+    const isMatch = await bcrypt.compare(adminpassword, admin.password);
+    
+      if (!isMatch) {
+        return res.status(400).json({
+          errors: [{ msg: "Invalid Credentials" }],
+        });
+      }
+      const defaultPassword = "hamara123"
+      const hashedPassword = await bcrypt.hash(defaultPassword, 10);
+      const updatedAffiliate = await prisma.affiliate.update({
+        where: { email: userEmail },
+        data: {
+          password: hashedPassword
+        }
+      })
+      return res.status(200).json({ msg: "success" });
+
+  } catch (error) {
+    console.log(error)
+  }
+
+
+
+})
 //
 
 //////////////////////////////////
