@@ -636,7 +636,7 @@ router.patch('/user-password-update',authenticateToken, async (req,res) => {
 
     // console.log(user)
 
-    if (!user) {
+    if (!admin) {
       return res.status(400).json({
         errors: [{ msg: "Invalid Credentials" }],
       });
