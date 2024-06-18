@@ -151,7 +151,7 @@ router.post("/addjob", async (req, res) => {
     const { name, mobile, affiliateCode,work } = req.body;
 
     console.log(req.body);
-    var newAffCode = "";
+    
     if (!affiliateCode || affiliateCode === "hamara/111") {
 
       newAffCode = "hamara/111";

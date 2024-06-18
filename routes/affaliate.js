@@ -189,6 +189,60 @@ router.post('/login', async (req,res) => {
    }
 
 })
+
+//// fetch affiliate
+
+router.get("/me", async (req,res) => {
+
+  const bearerToken = req.headers.authorization
+  if(!bearerToken) return res.send(null)
+
+  const jwt = bearerToken.split("Bearer ")[1]
+  if(!jwt) return res.send(null)
+
+  let payload
+  try {
+      payload = await JWT.verify(jwt, process.env.JSON_WEB_TOKEN_SECRET)
+  } catch (error) {
+      return res.send(null)
+  }
+
+  try {
+    const user = await prisma.affiliate.findUnique({
+      where: {
+          email: payload.email
+      }
+  })
+
+
+  const sendingPayload = {
+    id: user.id,
+    email: user.email,
+    mobile: user.mobile,
+    name: user.name,
+    website: user.website,
+    youtube: user.youtube,
+    instagram: user.instagram,
+    affiliateCode: user.affiliateCode,
+    imageUrl: user.imageUrl,
+    totalClicks: user.totalClicks,
+    totalInquiry: user.totalInquiry,
+    workgoingon: user.workgoingon,
+    totalMoney: user.totalMoney
+  };
+
+  return res.json({
+    user: sendingPayload
+  });
+  } catch (error) {
+    console.log("error")
+  }
+  
+})
+
+
+//
+
 //// PUT IT IN ADMIN
 // delete affailate 
 router.delete('/delete/:id', async (req,res) => {
