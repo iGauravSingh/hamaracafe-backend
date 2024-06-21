@@ -144,6 +144,26 @@ router.get("/getallJob", async (req, res) => {
   }
 });
 
+// get all job querries by date
+app.get('/getallJob/:date', async (req, res) => {
+  const { date } = req.params;
+
+  try {
+    const data = await prisma.job.findMany({
+      where: {
+        createdAt: {
+          equals: new Date(date) // Assuming date is in a format accepted by Date constructor
+        }
+      }
+    });
+
+    res.json(data);
+  } catch (error) {
+    console.error('Error retrieving data:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 // Add job Queries
 
 router.post("/addjob", async (req, res) => {

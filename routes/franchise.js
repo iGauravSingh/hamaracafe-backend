@@ -204,7 +204,11 @@ router.patch('/imageupload',upload.single("file"),async (req,res) => {
 router.get('/allfranchie', async (req,res) => {
     //console.log('in all franchise')
     try {
-        const allFranchie = await prisma.franchise.findMany({})
+        const allFranchie = await prisma.franchise.findMany({
+          orderBy: {
+            createdAt: 'desc'
+          }
+        })
 
         //console.log('in all franchise after',allFranchie)
         res.status(200).json(allFranchie)
