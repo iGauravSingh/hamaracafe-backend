@@ -145,7 +145,7 @@ router.get("/getallJob", async (req, res) => {
 });
 
 // get all job querries by date
-app.get('/getallJob/:date', async (req, res) => {
+router.get('/getallJob/:date', async (req, res) => {
   const { date } = req.params;
 
   try {
