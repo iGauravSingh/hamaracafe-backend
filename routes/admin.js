@@ -145,14 +145,26 @@ router.get("/getallJob", async (req, res) => {
 });
 
 // get all job querries by date
+const getDateRange = (dateString) => {
+  const date = new Date(dateString);
+  const startOfDay = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), 0, 0, 0, 0));
+  const endOfDay = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), 23, 59, 59, 999));
+  return { startOfDay, endOfDay };
+};
+
+
 router.get('/getallJob/:date', async (req, res) => {
   const { date } = req.params;
 
+  const { startOfDay, endOfDay } = getDateRange(date);
+
   try {
+    const { startOfDay, endOfDay } = getDateRange(date);
     const data = await prisma.job.findMany({
       where: {
         createdAt: {
-          equals: new Date(date) // Assuming date is in a format accepted by Date constructor
+          gte: startOfDay,
+          lte: endOfDay
         }
       }
     });
